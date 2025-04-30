@@ -1,0 +1,36 @@
+/* Styles.css */
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.mainGame {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    align-content: center;
+}
+
+.column_scrollable {
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+.column {
+    width: 33.33%; /* Each column will take up one-third of the container */
+    padding: 10px;
+    box-sizing: border-box; /* Ensures padding does not affect the width */
+}
+
+/* Optional: Adding spacing or borders to visually separate columns */
+.column:not(:last-child) {
+    margin-right: 20px; /* Adjust as needed */
+}

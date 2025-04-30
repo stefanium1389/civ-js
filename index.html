@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Civ</title>
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+  <body>
+    <nav>
+        <span>Population: <span id="current_pop">0</span>/<span id="max_pop">0</span> (<span id="population_growth">0</span>)</span>
+        <span>Food: <span id="food_per_turn">0</span></span>
+        <span>Culture: <span id="total_culture">2</span>/<span id="tech_cost">10</span> (+<span id="culture_per_turn">0</span>)</span>
+        <span>Production: <span id="total_production">0</span> (+<span id="production_per_turn">0</span>)</span>
+        <span>Turn: <span id="current_turn">0</span>/150</span>
+    </nav>
+    <div class="mainGame">
+        <div class="column"><b>Resources:</b>
+            <div>
+                Soliders: <span id="free_pop">0</span>
+                Strength modifier: <span id="strength_modifier">0%</span>
+                Army Strength: <span id="army_strength">0</span>
+                <br>
+                Enemy Strength: <span id="enemy_strength">0</span>
+            </div>
+            <div>
+                Farming: <span id="current_farming_pop">0</span>/<span id="max_farming_pop">0</span> <button onclick="assignFarmPop()">+</button> <button onclick="unassignFarmPop()">-</button>
+            </div>
+            <div>
+                Hearding: <span id="current_hearding_pop">0</span>/<span id="max_hearding_pop">0</span> <button onclick="assignHeardingPop()">+</button> <button onclick="unassignHeardingPop()">-</button>
+            </div>
+            <div>
+                Fishing: <span id="current_fishig_pop">0</span>/<span id="max_fishing_pop">0</span> <button onclick="assignFishingPop()">+</button> <button onclick="unassignFishingPop()">-</button>
+            </div>
+            <div>
+                Temple: <span id="current_temple_pop">0</span>/<span id="max_temple_pop">0</span> <button onclick="assignTemplePop()">+</button> <button onclick="unassignTemplePop()">-</button>
+            </div>
+            <div>
+                Mines: <span id="current_mines_pop">0</span>/<span id="max_mines_pop">0</span> <button onclick="assignMinesPop()">+</button> <button onclick="unassignMinesPop()">-</button>
+            </div>
+        </div>
+        <div class="column"><b>Buildings:</b>
+            <div id="buildings">
+
+            </div>
+        </div>
+        <div class="column"><b>Technologies:</b>
+            <br>
+            <span>Technology points: <span id="tech_points">0</span></span>
+            <div class="column_scrollable" id="technologies">
+
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="calculateTurn()">Next turn</button>
+    <script src="index.js"></script>
+  </body>
+</html>
