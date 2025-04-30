@@ -4,4 +4,4 @@ Grow your population by making food in farming, hearding and fishing!
 Research technologies by accumulating culutre which is produced in the temple!
 Build buildings with production from the mines!
 
-Can you manage all that to make the wonder in 150 turns?
+Can you manage all that to build The Great Wonder in 150 turns?
