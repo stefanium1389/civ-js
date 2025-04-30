@@ -1,5 +1,16 @@
 let turn_count = 1
 
+const house_coords = []
+const farmer_coords = []
+const farms_coords = []
+const hearder_coords = []
+const hearding_pen_coords = []
+const fisher_coords = []
+const fishing_ward_coords = []
+const templeman_coords = []
+const miner_coords = []
+const mines_coords = []
+
 let game_won = false
 
 let global_stats = {
@@ -459,8 +470,7 @@ function renderState() {
 
     renderBuildings()
     renderTechnologies()
-
-    console.log(global_stats)
+    renderCanvas()
 }
 
 function renderBuildings() {
@@ -540,12 +550,14 @@ function renderTechnologies() {
 
 function updatePopCap() {
     global_stats.population_cap = Math.floor(global_stats.base_population_cap * global_modifiers.population_cap_modifier)
+    renderState()
 }
 
 function updateFreePops() {
 
     global_stats.free_pop = Math.floor(global_stats.population - global_stats.farming_assigned_pop - global_stats.hearding_assigned_pop - global_stats.fishing_assigned_pop - global_stats.temple_assigned_pop - global_stats.mines_assigned_pop)
     global_stats.army_strength = global_stats.free_pop * global_modifiers.army_strength_modifier
+    renderState()
 
 }
 
@@ -558,16 +570,19 @@ function updateFoodPerTurn() {
         food_per_turn -= 0.5
     }
     global_stats.food_per_turn = food_per_turn;
+    renderState()
 }
 
 function updateCulturePerTurn() {
     culture_per_turn = global_stats.base_culture + (global_stats.temple_assigned_pop * global_stats.culture_per_pop) * global_modifiers.culture_modifier
     global_stats.culture_per_turn = culture_per_turn
+    renderState()
 }
 
 function updateProductionPerTurn() {
     production_per_turn = global_stats.mines_assigned_pop * global_stats.production_per_pop * global_modifiers.production_modifier
     global_stats.production_per_turn = production_per_turn
+    renderState()
 }
 
 function hasEnoughPopulation() {
@@ -592,6 +607,7 @@ function assignFarmPop() {
 function unassignFarmPop() {
     if (global_stats.farming_assigned_pop - 1 >= 0) {
         global_stats.farming_assigned_pop -= 1
+        farmer_coords.pop()
     }
     else {
         global_stats.farming_assigned_pop = 0
@@ -619,6 +635,7 @@ function assignHeardingPop() {
 function unassignHeardingPop() {
     if (global_stats.hearding_assigned_pop - 1 >= 0) {
         global_stats.hearding_assigned_pop -= 1
+        hearder_coords.pop()
     }
     else {
         global_stats.hearding_assigned_pop = 0
@@ -646,6 +663,7 @@ function assignFishingPop() {
 function unassignFishingPop() {
     if (global_stats.fishing_assigned_pop - 1 >= 0) {
         global_stats.fishing_assigned_pop -= 1
+        fisher_coords.pop()
     }
     else {
         global_stats.fishing_assigned_pop = 0
@@ -673,6 +691,7 @@ function assignTemplePop() {
 function unassignTemplePop() {
     if (global_stats.temple_assigned_pop - 1 >= 0) {
         global_stats.temple_assigned_pop -= 1
+        templeman_coords.pop()
     }
     else {
         global_stats.temple_assigned_pop = 0
@@ -700,6 +719,7 @@ function assignMinesPop() {
 function unassignMinesPop() {
     if (global_stats.mines_assigned_pop - 1 >= 0) {
         global_stats.mines_assigned_pop -= 1
+        miner_coords.pop()
     }
     else {
         global_stats.mines_assigned_pop = 0
@@ -813,4 +833,263 @@ function reducePopulation(number) {
     updateFreePops()
 
     renderState()
+}
+function renderCanvas() {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBackground(ctx)
+    drawPeople(ctx)
+
+}
+function drawBackground(ctx) {
+
+    drawFarms(ctx)
+    drawHouses(ctx)
+    drawMines(ctx)
+    drawTemple(ctx)
+    drawHeardingPens(ctx)
+    drawFishingWards(ctx)
+    
+}
+
+function drawPeople(ctx)
+{
+    drawFarmers(ctx)
+    drawTemplemen(ctx)
+    drawFishers(ctx)
+    drawMiners(ctx)
+    drawHearders(ctx)
+    drawSoliders(ctx)
+}
+
+function drawTemple(ctx) {
+    x = 764
+    y = 152
+    let img = document.getElementById("temple-basic")
+    if (global_stats.researched_technologies.includes("Temple worship")) {
+        img = document.getElementById("temple-temple")
+    }
+    if (global_stats.researched_technologies.includes("Codified polytheism")) {
+        img = document.getElementById("temple-codified")
+    }
+    if (global_stats.researched_technologies.includes("Sky worship")) {
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawFarms(ctx)
+{
+    for (let i = 0; i <= buildings[1].level; i++) {
+        let img = document.getElementById("farm-basic")
+        x = 0
+        y = 0
+        if (farms_coords[i] !== undefined) {
+            x = farms_coords[i].x;
+            y = farms_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 350))
+            y = Math.max(0, Math.round(Math.random() * 200)-60)
+            farms_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawHeardingPens(ctx)
+{
+    for (let i = 0; i <= buildings[2].level; i++) {
+        let img = document.getElementById("hearding-pen")
+        x = 0
+        y = 0
+        if (hearding_pen_coords[i] !== undefined) {
+            x = hearding_pen_coords[i].x;
+            y = hearding_pen_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 500 - 30)) + 500
+            y = Math.max(0, Math.round(Math.random() * 100 - 30)) + 230
+            hearding_pen_coords.push({ x, y })
+        }
+        if (global_stats.researched_technologies.includes("Animal hearding")) {
+            ctx.drawImage(img, x, y)
+        }
+        
+    }
+}
+
+function drawMines(ctx)
+{
+    for (let i = 0; i <= buildings[5].level; i++) {
+        let img = document.getElementById("mine")
+        x = 0
+        y = 0
+        if (mines_coords[i] !== undefined) {
+            x = mines_coords[i].x;
+            y = mines_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 350)) + 350
+            y = Math.max(0, Math.round(Math.random() * 125))
+            mines_coords.push({ x, y })
+        }
+        if (global_stats.researched_technologies.includes("Early stone work")) {
+            ctx.drawImage(img, x, y)
+        }
+        
+    }
+}
+
+function drawFishingWards(ctx)
+{
+    for (let i = 0; i <= buildings[3].level; i++) {
+        let img = document.getElementById("fishing-ward")
+        x = 0
+        y = 0
+        if (fishing_ward_coords[i] !== undefined) {
+            x = fishing_ward_coords[i].x;
+            y = fishing_ward_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 500))
+            y = Math.max(220, Math.round(Math.random() * 350 - 30))
+            fishing_ward_coords.push({ x, y })
+        }
+        if (global_stats.researched_technologies.includes("Simple fishing")) {
+            ctx.drawImage(img, x, y)
+        }
+        
+    }
+}
+
+function drawHouses(ctx) {
+    for (let i = 0; i < buildings[0].level; i++) {
+        let img = document.getElementById("house")
+        x = 0
+        y = 0
+        if (house_coords[i] !== undefined) {
+            x = house_coords[i].x;
+            y = house_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 500)) + 300
+            y = Math.max(0, Math.round(Math.random() * 100)) + 120
+            house_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawFarmers(ctx) {
+    for (let i = 0; i < global_stats.farming_assigned_pop; i++) {
+        let img = document.getElementById("farmer")
+        x = 0
+        y = 0
+        if (farmer_coords[i] != undefined) {
+            x = farmer_coords[i].x;
+            y = farmer_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 350))
+            y = Math.max(0, Math.round(Math.random() * 200))
+            farmer_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawHearders(ctx) {
+    for (let i = 0; i < global_stats.hearding_assigned_pop; i++) {
+        let img = document.getElementById("hearder")
+        x = 0
+        y = 0
+        if (hearder_coords[i] != undefined) {
+            x = hearder_coords[i].x;
+            y = hearder_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 500 - 30)) + 500
+            y = Math.max(0, Math.round(Math.random() * 100 - 30)) + 230
+            hearder_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawFishers(ctx) {
+    for (let i = 0; i < global_stats.fishing_assigned_pop; i++) {
+        let img = document.getElementById("fisherman")
+        x = 0
+        y = 0
+        if (fisher_coords[i] != undefined) {
+            x = fisher_coords[i].x;
+            y = fisher_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 500))
+            y = Math.max(0, Math.round(Math.random() * 100 - 30)) + 230
+            fisher_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawTemplemen(ctx) {
+    for (let i = 0; i < global_stats.temple_assigned_pop; i++) {
+        let img = document.getElementById("templeman")
+        x = 0
+        y = 0
+        if (templeman_coords[i] != undefined) {
+            x = templeman_coords[i].x;
+            y = templeman_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 300 - 30)) + 700
+            y = Math.max(0, Math.round(Math.random() * 230))
+            templeman_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawMiners(ctx) {
+    for (let i = 0; i < global_stats.mines_assigned_pop; i++) {
+        let img = document.getElementById("miner-basic")
+        if (global_stats.researched_technologies.includes("Bronze working")) {
+            img = document.getElementById("miner-bronze")
+        }
+        if (global_stats.researched_technologies.includes("Iron working")) {
+            img = document.getElementById("miner-iron")
+        }
+        x = 0
+        y = 0
+        if (miner_coords[i] != undefined) {
+            x = miner_coords[i].x;
+            y = miner_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 350)) + 350
+            y = Math.max(0, Math.round(Math.random() * 125))
+            miner_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+function drawSoliders(ctx) {
+    for (let i = 0; i < global_stats.free_pop; i++) {
+        let img = document.getElementById("solider-basic")
+        if (global_stats.researched_technologies.includes("Stone weapons")) {
+            img = document.getElementById("solider-stone")
+        }
+        if (global_stats.researched_technologies.includes("Bronze weapons")) {
+            img = document.getElementById("solider-bronze")
+        }
+        if (global_stats.researched_technologies.includes("Iron weapons")) {
+            img = document.getElementById("solider-iron")
+        }
+        x = Math.max(0, Math.round(Math.random() * 1000) - 30)
+        y = Math.max(0, Math.round(Math.random() * 350) - 30)
+        ctx.drawImage(img, x, y)
+    }
 }

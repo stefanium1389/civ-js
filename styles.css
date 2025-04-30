@@ -13,6 +13,13 @@ nav {
     padding: 10px;
     box-sizing: border-box;
 }
+.resourcesAndBuildings {
+    display: flex;
+    justify-content: space-between;
+    width: 66vw;
+    padding: 10px;
+    box-sizing: border-box;
+}
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -23,9 +30,20 @@ body {
     max-height: 80vh;
     overflow-y: scroll;
 }
-
+canvas {
+    width: 1000px;
+    max-height: 375px;
+    image-rendering: pixelated;
+    border: 1px;
+    border-style: dashed;
+}
+.column2 {
+    width: 50%; /* Each column will take up one-third of the container */
+    padding: 10px;
+    box-sizing: border-box; /* Ensures padding does not affect the width */
+    min-height: 400px;
+}
 .column {
-    width: 33.33%; /* Each column will take up one-third of the container */
     padding: 10px;
     box-sizing: border-box; /* Ensures padding does not affect the width */
 }

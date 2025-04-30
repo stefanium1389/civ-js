@@ -17,36 +17,45 @@
         <span>Turn: <span id="current_turn">0</span>/150</span>
     </nav>
     <div class="mainGame">
-        <div class="column"><b>Resources:</b>
-            <div>
-                Soliders: <span id="free_pop">0</span>
-                Strength modifier: <span id="strength_modifier">0%</span>
-                Army Strength: <span id="army_strength">0</span>
-                <br>
-                Enemy Strength: <span id="enemy_strength">0</span>
+        <div class="column">
+            <div class="resourcesAndBuildings">
+                <div class="column2"><b>Resources:</b>
+                    <div>
+                        Soliders: <span id="free_pop">0</span>
+                        Strength modifier: <span id="strength_modifier">0%</span>
+                        Army Strength: <span id="army_strength">0</span>
+                        <br>
+                        Enemy Strength: <span id="enemy_strength">0</span>
+                    </div>
+                    <div>
+                        Farming: <span id="current_farming_pop">0</span>/<span id="max_farming_pop">0</span> <button onclick="assignFarmPop()">+</button> <button onclick="unassignFarmPop()">-</button>
+                    </div>
+                    <div>
+                        Hearding: <span id="current_hearding_pop">0</span>/<span id="max_hearding_pop">0</span> <button onclick="assignHeardingPop()">+</button> <button onclick="unassignHeardingPop()">-</button>
+                    </div>
+                    <div>
+                        Fishing: <span id="current_fishig_pop">0</span>/<span id="max_fishing_pop">0</span> <button onclick="assignFishingPop()">+</button> <button onclick="unassignFishingPop()">-</button>
+                    </div>
+                    <div>
+                        Temple: <span id="current_temple_pop">0</span>/<span id="max_temple_pop">0</span> <button onclick="assignTemplePop()">+</button> <button onclick="unassignTemplePop()">-</button>
+                    </div>
+                    <div>
+                        Mines: <span id="current_mines_pop">0</span>/<span id="max_mines_pop">0</span> <button onclick="assignMinesPop()">+</button> <button onclick="unassignMinesPop()">-</button>
+                    </div>
+                </div>
+                <div class="column2"><b>Buildings:</b>
+                    <div id="buildings">
+        
+                    </div>
+                </div>
             </div>
-            <div>
-                Farming: <span id="current_farming_pop">0</span>/<span id="max_farming_pop">0</span> <button onclick="assignFarmPop()">+</button> <button onclick="unassignFarmPop()">-</button>
-            </div>
-            <div>
-                Hearding: <span id="current_hearding_pop">0</span>/<span id="max_hearding_pop">0</span> <button onclick="assignHeardingPop()">+</button> <button onclick="unassignHeardingPop()">-</button>
-            </div>
-            <div>
-                Fishing: <span id="current_fishig_pop">0</span>/<span id="max_fishing_pop">0</span> <button onclick="assignFishingPop()">+</button> <button onclick="unassignFishingPop()">-</button>
-            </div>
-            <div>
-                Temple: <span id="current_temple_pop">0</span>/<span id="max_temple_pop">0</span> <button onclick="assignTemplePop()">+</button> <button onclick="unassignTemplePop()">-</button>
-            </div>
-            <div>
-                Mines: <span id="current_mines_pop">0</span>/<span id="max_mines_pop">0</span> <button onclick="assignMinesPop()">+</button> <button onclick="unassignMinesPop()">-</button>
-            </div>
-        </div>
-        <div class="column"><b>Buildings:</b>
-            <div id="buildings">
 
+            <div class="canvas_div">
+                <canvas id="canvas" width="1000" height="350">
+                </canvas>
             </div>
         </div>
-        <div class="column"><b>Technologies:</b>
+        <div><b>Technologies:</b>
             <br>
             <span>Technology points: <span id="tech_points">0</span></span>
             <div class="column_scrollable" id="technologies">
@@ -57,5 +66,28 @@
     
     <button onclick="calculateTurn()">Next turn</button>
     <script src="index.js"></script>
+    <div style="display: none;">
+        <!-- Image sprites for the game-->
+        <img id="farm-basic" src="img/farm-basic.bmp"/>
+        <img id="farmer" src="img/farmer.bmp"/>
+        <img id="fisherman" src="img/fisherman.bmp"/>
+        <img id="fishing-ward" src="img/fishing-ward.bmp"/>
+        <img id="hearder" src="img/hearder.bmp"/>
+        <img id="hearding-pen" src="img/hearding-pen.bmp"/>
+        <img id="house" src="img/house.bmp"/>
+        <img id="man" src="img/man.bmp"/>
+        <img id="mine" src="img/mine.bmp"/>
+        <img id="miner-basic" src="img/miner-basic.bmp"/>
+        <img id="miner-bronze" src="img/miner-bronze.bmp"/>
+        <img id="miner-iron" src="img/miner-iron.bmp"/>
+        <img id="solider-basic" src="img/solider-basic.bmp"/>
+        <img id="solider-bronze" src="img/solider-bronze.bmp"/>
+        <img id="solider-iron" src="img/solider-iron.bmp"/>
+        <img id="solider-stone" src="img/solider-stone.bmp"/>
+        <img id="temple-basic" src="img/temple-basic.bmp"/>
+        <img id="temple-temple" src="img/temple-temple.bmp"/>
+        <img id="temple-codified" src="img/temple-codified.bmp"/>
+        <img id="templeman" src="img/templeman.bmp"/>
+    </div>
   </body>
 </html>
