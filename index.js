@@ -10,6 +10,8 @@ const fishing_ward_coords = []
 const templeman_coords = []
 const miner_coords = []
 const mines_coords = []
+const metalurgy_coords = []
+const armory_coords = []
 
 let game_won = false
 
@@ -845,8 +847,11 @@ function renderCanvas() {
 function drawBackground(ctx) {
 
     drawFarms(ctx)
-    drawHouses(ctx)
     drawMines(ctx)
+    drawMetalurgy(ctx)
+    drawHouses(ctx)
+    drawArmory(ctx)
+    drawGreatWonder(ctx)
     drawTemple(ctx)
     drawHeardingPens(ctx)
     drawFishingWards(ctx)
@@ -874,6 +879,15 @@ function drawTemple(ctx) {
         img = document.getElementById("temple-codified")
     }
     if (global_stats.researched_technologies.includes("Sky worship")) {
+        ctx.drawImage(img, x, y)
+    }
+}
+
+function drawGreatWonder(ctx) {
+    x = 857
+    y = 22
+    let img = document.getElementById("the-great-wonder")
+    if (buildings[8].level >= 1) {
         ctx.drawImage(img, x, y)
     }
 }
@@ -940,6 +954,24 @@ function drawMines(ctx)
         
     }
 }
+function drawMetalurgy(ctx)
+{
+    for (let i = 0; i < buildings[7].level; i++) {
+        let img = document.getElementById("metalurgy")
+        x = 0
+        y = 0
+        if (metalurgy_coords[i] !== undefined) {
+            x = metalurgy_coords[i].x;
+            y = metalurgy_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 350)) + 350
+            y = Math.max(0, Math.round(Math.random() * 125))
+            metalurgy_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
 
 function drawFishingWards(ctx)
 {
@@ -973,9 +1005,26 @@ function drawHouses(ctx) {
             y = house_coords[i].y;
         }
         else {
-            x = Math.max(0, Math.round(Math.random() * 500)) + 300
+            x = Math.max(0, Math.round(Math.random() * 350)) + 300
             y = Math.max(0, Math.round(Math.random() * 100)) + 120
             house_coords.push({ x, y })
+        }
+        ctx.drawImage(img, x, y)
+    }
+}
+function drawArmory(ctx) {
+    for (let i = 0; i < buildings[6].level; i++) {
+        let img = document.getElementById("armory")
+        x = 0
+        y = 0
+        if (armory_coords[i] !== undefined) {
+            x = armory_coords[i].x;
+            y = armory_coords[i].y;
+        }
+        else {
+            x = Math.max(0, Math.round(Math.random() * 350)) + 300
+            y = Math.max(0, Math.round(Math.random() * 100)) + 120
+            armory_coords.push({ x, y })
         }
         ctx.drawImage(img, x, y)
     }
